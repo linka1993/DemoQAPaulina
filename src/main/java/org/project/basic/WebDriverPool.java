@@ -35,6 +35,9 @@ public class WebDriverPool {
     }
 
     public static WebDriver getWebDriver() {
+        if (driver == null){
+            getWebDriver("chrome");
+        }
         return driverDecorated;
     }
 

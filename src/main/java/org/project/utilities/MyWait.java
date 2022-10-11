@@ -10,7 +10,7 @@ import org.project.basic.WebDriverPool;
 
 import java.time.Duration;
 
-public class MyWait {
+public class MyWait{
 
     WebDriver driver = WebDriverPool.getWebDriver();
     //FluentWait wait;
