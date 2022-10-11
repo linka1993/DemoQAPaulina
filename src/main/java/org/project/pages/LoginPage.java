@@ -15,8 +15,6 @@ public class LoginPage extends PageObject {
 
 
     // Define Elements on Page
-    @FindBy(css = "div.playgound-header")
-    WebElement loginBanner;
     @FindBy (css = "div h2")
     WebElement welcomeSign;
 
@@ -35,12 +33,9 @@ public class LoginPage extends PageObject {
     @FindBy(css = "button#newUser")
     WebElement newUserButton;
 
+
     // Define Methods on Page
 
-    public void checkIfLoginPageLoaded(){
-        myWait.pollingUntilVisibilityOfElement(1, 10, loginBanner);
-        myAssertion.assertValues("Login", loginBanner);
-    }
      public void checkWelcomeLabels(){
          myAssertion.assertValues("Welcome,", welcomeSign);
          myAssertion.assertValues("Login in Book Store", welcomeLabel);

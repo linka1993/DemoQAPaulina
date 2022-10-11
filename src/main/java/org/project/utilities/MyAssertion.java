@@ -2,10 +2,16 @@ package org.project.utilities;
 
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.project.basic.WebDriverPool;
 
+import java.time.Duration;
 import java.util.List;
 
 public class MyAssertion {
+
+    WebDriverWait wait = new WebDriverWait(WebDriverPool.getWebDriver(), Duration.ofSeconds(5));
 
     public void assertValues(String element, WebElement source){
         String sourcetext = source.getText();
@@ -44,11 +50,23 @@ public class MyAssertion {
     public void biggerValue(Integer biggerValue, Integer smallerValue){
         if(smallerValue>biggerValue){
             throw new AssertionError(String.format("%s is smaller than %s", biggerValue, smallerValue));
-        } else if (smallerValue==biggerValue){
-            throw new AssertionError(String.format("Both values are the same", biggerValue, smallerValue));
+        } else if (smallerValue.equals(biggerValue)){
+            throw new AssertionError(String.format("Both values %s and %s are the same", biggerValue, smallerValue));
         }
     }
 
-    // TODO 3 - Asercje dla listy elementów
+    public boolean notVisible(WebElement element){
+        try{
+            if(element.isDisplayed()){
+                throw new AssertionError(String.format("Element %s is still visible on page",element.getTagName()));
+            }
+
+        }catch (NoSuchElementException e){
+            return true;
+
+        }
+        return true;
+    }
+
 
 }
