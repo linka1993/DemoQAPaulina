@@ -14,11 +14,9 @@ public class BookStorePage extends PageObject {
     MyWait myWait = new MyWait();
     JavaScript js = new JavaScript();
     MyAssertion myAssertion = new MyAssertion();
-
+    Menu menu = new Menu();
 
     // Define Elements on Page
-    @FindBy(css = "div.playgound-header")
-    WebElement bookStoreBanner;
 
     @FindBy(css = "input#searchBox")
     WebElement searchInput;
@@ -41,11 +39,17 @@ public class BookStorePage extends PageObject {
     @FindBy(xpath = "//span[text()='Profile']//parent::li")
     WebElement profileLink;
 
+    @FindBy(css = "label#userName-label")
+    WebElement userNameLabel;
+
+    @FindBy(css = "label#userName-value")
+    WebElement userNameDisplay;
+
+    @FindBy(xpath = "//button[text()='Log out']")
+    WebElement logoutButton;
+
     // Define Methods on Page
-    public void checkIfBookStoreLoaded(){
-        myWait.pollingUntilVisibilityOfElement(1, 10, bookStoreBanner);
-        myAssertion.assertValues("Book Store", bookStoreBanner);
-    }
+
 
     public void checkSearchFunctionality(String title){
         Integer beforeSearching = listOfBooks.size();
@@ -53,10 +57,26 @@ public class BookStorePage extends PageObject {
         Integer afterSearching = listOfBooks.size();
         myAssertion.biggerValue(beforeSearching, afterSearching);
         myAssertion.assertValuesInList(title, listOfBooks);
-        System.out.println("Done");
+    }
+
+    public void checkIfUserLoggedOut(){
+        myAssertion.notVisible(userNameLabel);
+        myAssertion.notVisible(userNameDisplay);
+        loginPageButton.isDisplayed();
     }
 
     public void enterLoginPage(){
         loginPageButton.click();
     }
+
+    public void checkIfUserLoggedIn(String userName){
+        userNameLabel.isDisplayed();
+        myAssertion.assertValues(userName, userNameDisplay);
+    }
+
+    public void logOut(){
+        logoutButton.isDisplayed();
+        logoutButton.click();
+    }
 }
+
